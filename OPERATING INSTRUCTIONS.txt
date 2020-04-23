@@ -1,0 +1,218 @@
+FULL STACK WEB DEVELOPMENT - FINAL PROJECT
+********************************************
+********************************************
+
+*********************************************
+*                                           *
+*          INSTALLING INSTRUCTIONS	       	*
+*          OPRATINGING INSTRUCTIONS	       	*
+*          PROJECT DESCRIPTION  	       	*
+*  						               	    *
+*********************************************
+for deep thechnical descriptions see file: 
+TECHNOLOGIES REVIEW
+
+
+
+PROJECT TITLE: 	drugstore.com
+SUBTITLE:		A full stack project of web drugstore.
+DEVELOPER: 	Doron Sherf
+			sherfdo@gmail.com
+			Cell.: +972-50-8922329
+
+
+BEFORE RUNING INSTRUCTIONS Build the DataBase
+**********************************************
+	Creating the DB(database) + its tables can is done automaticly by the program (in:db_config.js)
+
+	If you like, you can manually enter initial data to DB
+	fot manually enter initial data do the folowing: 
+
+	1	Open XAMPP Contol Panel
+	2 	Start Apache Moudule
+	3 	Start MySql Moudule - The DB start run on port: 3306
+	4	Open browser at http://localhost/phpmyadmin
+	5 	directly paste the info from ds_db.sql  
+	 OR 
+	6 	Import file :   
+		6.1  open SQL section (choose SQL from upper bar)
+		6.2  Paste all taxt copied info from ds_db.sql  
+		6.3  push excute (ביצוע)btn 
+
+
+PROJECT RUN INSTRACTIONS 
+***************************
+	1. Run the DB server side (localhost:3010):
+		C:\project_folder>backend> nodemon index.js
+	2. Run the server again(to insert Data Base Tables values)
+		C:\project_folder>backend> rs
+
+	3. Run the angular client side (degault: localhost:4200):
+		C:\project_folder\frontend> ng serve --proxy-config proxy.conf.json
+		* PROXY SERVER TO PREVENT CORS VIOLATION IN ANGULAR APP
+
+USERS TYPES
+*****************************
+	1. There are 3 users levels:
+		1.1 admin_hi: Hi-level admin (level:1)
+			1.1.1 autorized to edit: users (add/remove/create / update/change Detailes of other admin users or of regular users
+			1.1.2 autorized to edit: products (add/remove/Change) 
+		1.2 admin_lo: low level admin (level:2) 
+		    autorized only to add new product and to edit products, but not to delete one.
+		1.3 user_reg: regular registered buyer (costumer) (level:3)
+			autorized  to perform shopping. add products to shopping cart, order and pay.
+		1.4 free visitor: can view only home screen, and perform a signin (registration to become user_reg.	
+
+Admin Functionalities
+************************************
+	1. After admin login the system present a page to enable editing acording his level(1 or 2). 
+
+	
+Registered Buyers Functionalities
+*************************************
+	Home Page
+		1. Autorized buyers access thier accunt after login. 
+		2. They can update thier personal info. 
+		3. They can move on for shopping (start shopping).
+	Cart Select
+		1. The buyer may start shopping, whith empty cart or with one of his previuse carts: cart which he bought, or cart that was abandoned (open cart).
+	Shopping Page
+		1. Shopping screen includes shopping cart and the products panel. 
+		2. buyer can hide the cart to enlarge the panel. 
+		3. Products can be displayed based on the selected 'product type' (category). 
+		4. Buyers can search items through search box	
+		5. Buyers can select a specific item (from cart or from products panel) to view product details and enlarged image
+		6. Buyers easally add items to their shopping carts 
+	Order Page
+		1. Order screen includes products list and the Shippment panel.
+		2. Buyers can search items in product list
+		3. shipping form can filled with one button click with all signin info of the buyer.
+		4. double click on an input field, inserts buyer sign-in info for that input field/
+		5. user selects delivery date only from free date (for demo: 3+ deliveries per date)
+	Checkout  panel
+		1. paying panel is executed by paypal. 
+		2. buyers can print or export thier invoice to PDF or to CVS filles
+
+Continuity Principle
+************************
+	1. After more than 60 minuets of surfing, token expires, and the user asked to relogin. If he relogin with the right password, he reach the same last page he was veiwing. 
+	2. Buyers can unwillingly disconnected or logout at any stage. When they would login again, they will see their previuse carts, and they can choose shopping based on previuse carts.
+
+Main Technologies Used: SEAN    
+**************************************
+	SEAN: S-SQL(MySql) + E-ExpressJS + A-Angular + N-NodeJS.
+	
+	Using Node.js framework + ExpressJS packags for backend(server side)
+	Using ANGULAR 8 for the frontend (client side)
+	using MySql Database
+
+More Technologies In Use in backend side:    
+*********************************************************
+	1. bcrypt 
+	2. JWT
+	3. routs whitelisting (implamented with express)
+	4. config DB from NodeJS
+
+More Technologies implamented in Angular frontkend side:    
+*********************************************************
+	1. EventEmitter for child<->parent
+	2. BehaviorSubject share data between sibling components
+	3. Interceptors
+	4. hosting forein component (paypal)
+	5. Export data to CVS / Excel files
+	6. PrimeNG - UI components library
+
+
+SECURITY
+***************************
+	in this project 5 security subjects:
+	1. bcrypt Password Encoding: for server<->DB(DataBase) Passworwd saving/retrieving  
+	2. JWT - JSON Web Tokens for client<->server interactions
+	3. Block Un listed routs - in the server 
+	4. Auth(authentication) interceptor: watch client->server requests.Add JWT to all requests
+	5. Error Interceptor: watch server->client replyes. 
+		5.1 Catch 'Token Expired' errors and give the user gentel feedback(please Re-Login...)
+		5.2 Catch 'unauthorised' activites and block them
+
+	* Note about  angular 'route guards':
+	 in this project we are NOT authenticating user in the Client side when routing between components. e.g. we dont block client side routing by using angular 'route guards'. The resons for that:  
+	  a) One can bypass this client side authentication check using browser dev tools and by manually add a currentUser info (user object, loginer_id etc.) to session storage. Doing it would enable him routing between client side components. if these components use data from cash memory, no harm is done. but if this component execute server api routing to recieve new data  or update/delete server data  the server would block that requests because of JWT mismatch(see b) ). 	
+	  b) in this app the server side would block access to any real secure data from server. The server provid restricted data only if valid token (JWT) was attached to the request.  
+
+ SERVER(the backend) USE PACKAGS 
+***********************************************
+	1. NodeJS
+	2. express	
+	3. npm-mysql
+	4. CORS   
+	5. BODY PARSER
+
+SERVER(backend) MAIN FOLDERS
+***********************************************
+	0. index.js	
+	1. config 		/  db_config.js
+	2. DB     		/  db_data tables in js formatting
+	3. handlers 	/  db_queries of entry/admin/buyer
+	4. middlewares  /  aprov(do not block) pathes lists
+	5. routes 		/  entry/admin/buyer
+
+
+ CLIENT (BACKEND) MAIN FOLDERS
+******************************************************	
+	1.	C:\project_folder/frontend/src/app / components 
+	2.	C:\project_folder/frontend/src/app / services	
+	3.	C:\project_folder/frontend/src/app /  models	
+	4.	C:\project_folder/frontend/src/app / helpers/	//
+	5.	C:\project_folder/frontend/src/ assets/store_images+products_images
+
+COMPONENTS
+****************************************				
+	1. header
+	2. home
+	3. store_info
+	4. login
+	5. signin
+	6. shopping
+	7. products
+	8. cart
+	9. order
+	10.admin
+	11.paypal-checkout
+	12.users
+	13.admin_prod
+	13.relogin
+
+SERVICES
+****************************************	
+	1. products  
+	2. prod_types  
+	3. signin  
+	4. login  
+	5. users  
+	6. addresses
+	7. carts
+	8. orders
+
+MODELS
+************************************
+	1. user
+	2. product
+	3. cart
+	4. cart_items
+	5. order
+
+Interceptors
+***************************************** 
+	1. helpers/auth.interceptor 
+	2. helpers/error.interceptor 
+ 
+IMPORT FORMAL ISRAEL GOVERNMENT DB FOR STREETS
+********************************************************	
+	IMPORT FILE rechovot_2_20190612.csv from site : https://data.gov.il/dataset/israel-streets-synom
+ 	
+
+KEY SITES INFO 
+***************************
+	1. https://angular.io -> official site of Angular
+	2. GIT Tutorial: https://www.sbf5.com/~cduan/technical/git/git-1.shtml
+	3. https://jwt.io -> official site of'Auth0'. have full Libraries for JWTs Signing/VerificationSecurely. Create and test online tokens trings, header etc.
