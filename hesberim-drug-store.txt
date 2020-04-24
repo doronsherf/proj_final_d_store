@@ -577,4 +577,68 @@ Private Key: 		CFAF9F8C-6B79-4F68-9EBA-764846B128A5
 Instant Notification Service (INS) secret word: d1963
 Buy link secret word: d1963
 
+*************************************************************************************
+
+
+C:\dor21_dstore>git init  
+
+C:\dor21_dstore>git add .
+
+The file will have its original line end
+warning: LF will be replaced by CRLF in 
+The file will have its original line end
+warning: LF will be replaced by CRLF in 
+The file will have its original line end
+warning: LF will be replaced by CRLF in 
+The file will have its original line end
+warning: LF will be replaced by CRLF in 
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in backend/package-lock.json.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in backend/package.json.
+The file will have its original line endings in your working directory
+warning: adding embedded git repository: frontend
+
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint:
+hint:   git submodule add <url> frontend
+hint:
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint:
+hint:   git rm --cached frontend
+hint:
+hint: See "git help submodule" for more information.
+
+C:\dor21_dstore>git remote add origin https://github.com/doronsherf/proj_final_d_store.git
+
+C:\dor21_dstore>git push -u origin master
+error: src refspec master does not match any
+error: failed to push some refs to 'https://github.com/doronsherf/proj_final_d_store.git'
+
+C:\dor21_dstore>git push  -f origin master
+error: src refspec master does not match any
+error: failed to push some refs to 'https://github.com/doronsherf/proj_final_d_store.git'
+
+C:\dor21_dstore>git remote add origin https://github.com/doronsherf/proj_final_d_store.git
+fatal: remote origin already exists.
+
+C:\dor21_dstore>git push   origin master
+error: src refspec master does not match any
+error: failed to push some refs to 'https://github.com/doronsherf/proj_final_d_store.git'
+
+C:\dor21_dstore>git push -f  origin master
+error: src refspec master does not match any
+error: failed to push some refs to 'https://github.com/doronsherf/proj_final_d_store.git'
+
+C:\dor21_dstore>git commit -m 'commit message 1'
+error: pathspec 'message' did not match any file(s) known to git
+error: pathspec '1'' did not match any file(s) known to git
+
+C:\dor21_dstore>git pull --rebase origin master
+fatal: Updating an unborn branch with changes added to the index.
+
 		
