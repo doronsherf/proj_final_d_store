@@ -199,7 +199,8 @@ function create_tables_with_data(){
 			else {console.log('db_confg: OK: "Table3" of 7, created at: '+new Date().toLocaleTimeString())
 				conction2.query(data4db.tbl3_data , (err) =>{
 					if(err) {
-						console.log('db_confg: ERROR: Tbl3 insert data FAILED at: '+new Date().toLocaleTimeString());						handled_tables.push('Tbl3 insert data Failed')
+						console.log('db_confg: ERROR: Tbl3 insert data FAILED at: '+new Date().toLocaleTimeString());						
+						handled_tables.push('Tbl3 insert data Failed')
 				}
 					if(!err) {
 						console.log('db_confg: Data inserted into "Tbl3"  at: '+new Date().toLocaleTimeString());
@@ -227,10 +228,8 @@ function create_tables_with_data(){
 		conction2.query(create_tbl4 , (err) =>{
 			if(err) {
 				console.log('db_confg: ERROR: "Table4" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
-				console.log('444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444');
 				
 				console.log('tbl4 err:',err);
-				console.log('444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444');
 
 				handled_tables.push('tbl4 NOT created in the DB!');
 			}
@@ -274,11 +273,7 @@ function create_tables_with_data(){
 		conction2.query(create_tbl5 , (err) =>{
 			if(err) {
 				console.log('db_confg: ERROR: "Table5" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
-				console.log('55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555');
-
 				console.log('tbl5 err:',err);
-				console.log('55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555');
-
 				handled_tables.push('tbl5 NOT created in the DB!');
 			}
 			else {console.log('db_confg: OK: "Table5" of 7, created at: '+new Date().toLocaleTimeString())
@@ -328,12 +323,8 @@ function create_tables_with_data(){
 
 		conction2.query(create_tbl6 , (err) =>{
 			if(err) {
-				console.log('db_confg: ERROR: "Table6" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
-				console.log('666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666');
-				
-				console.log('tbl6 err:',err);
-				console.log('666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666');
-				
+				console.log('db_confg: ERROR: "Table6" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());		
+				console.log('tbl6 err:',err);				
 				handled_tables.push('tbl6 NOT created in the DB!');
 			}
 			else {console.log('db_confg: OK: "Table6" of 7, created at: '+new Date().toLocaleTimeString())

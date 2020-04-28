@@ -418,10 +418,15 @@ IMPORT FILE rechovot_2_20190612.csv from site : https://data.gov.il/dataset/isra
 
 GIT:  versions control system
 **************************** 
+0. 	git add: 
+		takes a modified file in your working directory and places the modified 	version in a staging area.
+	git commit: 
+		takes everything from the staging area and makes a permanent snapshot of the current state of your repository that is associated with a unique identifier.
+
 1. git init	
 	C:\project_folder> git init
 	// Create a repository for the project: Creates '.git' folder inside the project folder 
-	( In this case: C:\dor12_proj_family_tasks00\family_tasks00> git init )
+	
 2. 	git status
 	C:\project_folder> git status
 	// to see what files were changed since the priviouse "git add".
@@ -429,7 +434,10 @@ GIT:  versions control system
 	// Green: files were STAGED (added to the commit) 
 3.	git add .
 	C:\project_folder>git add .
-	// Tell Git which files to include in the commit Object. But do not buils the new commit object!
+	// Tell Git which to include in the commit Object all(modified and new files and deleted files) stage But do not push new commit object!
+	
+	git add: takes a modified file in your working directory and places the modified version in a staging area.
+	git commit takes everything from the staging area and makes a permanent snapshot of the current state of your repository that is associated with a unique identifier.
 	
 4	git commit -m
 	C:\project_folder> git commit -m "<your_message>"
@@ -456,6 +464,10 @@ GIT:  versions control system
 
 
 	git checkout master
+
+Updates were rejected because the remote contains work that you do not have locally. This is usually caused by another repository pushing to the same ref. You may want to first integrate the remote changes (e.g., 'git pull ...') before pushing again.
+
+
 
 PAYPAL
 ****************************************
