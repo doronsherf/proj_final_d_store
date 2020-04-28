@@ -22,25 +22,25 @@ let conction1 = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "",
-	// database: "ds_db", NOT defined
+	// database: "dragstore_db", NOT defined
 });
 // conction2: conect MySql project 
 let conction2 = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "",
-	database: "ds_db",
+	database: "dragstore_db",
 	multipleStatements: true,
 });
 
 // 2.Chek if DB exist	
-conction1.query("SHOW DATABASES WHERE  `Database` = 'ds_db'" , (err, data) =>{
-		if(data.length==0) {//if ds_db NOT exists -> Creat DB and Tables(in the first time run)
-			console.log("db_confg: 'db_config' did NOT found ds_db");
+conction1.query("SHOW DATABASES WHERE  `Database` = 'dragstore_db'" , (err, data) =>{
+		if(data.length==0) {//if dragstore_db NOT exists -> Creat DB and Tables(in the first time run)
+			console.log("db_confg: 'db_config' did NOT found dragstore_db");
 			create_db();
 		}
 		else {
-			console.log("db_confg:  'db_config' found DB! -> ds_db");
+			console.log("db_confg:  'db_config' OK1: found DB! -> dragstore_db");
 			conect2db();
 		}
 		if(err) console.log('db_config err1:', err);
@@ -52,28 +52,28 @@ function conect2db(){
 			console.log("db_confg:  'db_config' ERROR! DB connection2 error: ");
 			console.log("db_confg: 'db_config' err.code IS ",err.code); 	
 		} else {
-			console.log("db_confg: 'db_config' OK2: Connected to MySqlDB:'ds_db' at: " + new Date().toLocaleTimeString() );
+			console.log("db_confg: 'db_config' OK2.1: Connected to MySqlDB:'dragstore_db' at: " + new Date().toLocaleTimeString() );
 		}
 	});
 }
 
 //// BUILD TABLES INSIDE THE EXISTING DATABSAE ******************************************
 function create_db(){
-	let create_db = 'CREATE DATABASE IF NOT EXISTS ds_db';
+	let create_db = 'CREATE DATABASE IF NOT EXISTS dragstore_db';
 	conction1.query(create_db , (err, resulat ) =>{
 		if(err) {
-			console.log('db_confg: ERROR: DB "ds_db" was NOT created' );
+			console.log('db_confg: ERROR: DB "dragstore_db" was NOT created' );
 			console.log(err);
 		}
 		else {
-			console.log('db_confg: OK: DB "ds_db" created at: '+new Date().toLocaleTimeString()); 
+			console.log('db_confg: OK: DB "dragstore_db" created at: '+new Date().toLocaleTimeString()); 
 			conction2.connect((err) => {
 				if (err) {
 					console.log("db_confg: ERROR2! MySqlDB connection2 error: ");
 					console.log('db_confg: err.code IS ',err.code); 	
 
 				} else {
-					console.log("db_confg: OK2: Connected to MySqlDB:'ds_db' at: " + new Date().toLocaleTimeString());
+					console.log("db_confg: OK2.0: Connected to MySqlDB:'dragstore_db' at: " + new Date().toLocaleTimeString());
 					create_tables_with_data()
 				}
 			});
@@ -82,7 +82,7 @@ function create_db(){
 }
 
 function create_tables_with_data(){
-// DROP DATABASE ds_db
+// DROP DATABASE dragstore_db
 	let handled_tables = [];
 	let restart_foreign_key_checks = setInterval(check_if_it_is_time_to_restart_foreign_key_checks, 1000);
 
@@ -118,8 +118,8 @@ function create_tables_with_data(){
  
 		conction2.query(create_tbl1 , (err) =>{
 			if(err) {
-				console.log('db_confg: ERROR: Table1 of 7, NOT recognized in the DB! at: '+new Date().toLocaleTimeString()); 
-				handled_tables.push('tbl1 NOT recognized in the DB!');
+				console.log('db_confg: ERROR: Table1 of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString()); 
+				handled_tables.push('tbl1 NOT created in the DB!');
 			}
 			else {
 				console.log('db_confg: OK: "Table1"(USERS) created at: '+new Date().toLocaleTimeString());
@@ -148,8 +148,8 @@ function create_tables_with_data(){
 
 		conction2.query(create_tbl2 , (err) =>{
 			if(err) {
-				console.log('db_confg: ERROR: "Table2" of 7, NOT recognized in the DB! at: '+new Date().toLocaleTimeString());
-				handled_tables.push('tbl2 NOT recognized in the DB!');
+				console.log('db_confg: ERROR: "Table2" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
+				handled_tables.push('tbl2 NOT created in the DB!');
 			}
 			else {console.log('db_confg: OK: "Table2" of 7, created at: '+new Date().toLocaleTimeString())
 			conction2.query(data4db.tbl2_data , (err) =>{
@@ -194,7 +194,7 @@ function create_tables_with_data(){
 
 		conction2.query(create_tbl3 , (err) =>{
 			if(err) {
-				console.log('db_confg: ERROR: "Table3" of 7, NOT recognized in the DB! at: '+new Date().toLocaleTimeString());				handled_tables.push('tbl3 NOT recognized in the DB!');
+				console.log('db_confg: ERROR: "Table3" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());				handled_tables.push('tbl3 NOT created in the DB!');
 			}
 			else {console.log('db_confg: OK: "Table3" of 7, created at: '+new Date().toLocaleTimeString())
 				conction2.query(data4db.tbl3_data , (err) =>{
@@ -212,23 +212,27 @@ function create_tables_with_data(){
 	///CREATE TABLE4: CARTS 
 		let create_tbl4 = `CREATE TABLE IF NOT EXISTS carts (
 			cart_no			INT AUTO_INCREMENT, 
-			user_id			BIGINT ,
+			user_id			BIGINT NOT NULL, 
 			cart_date		DATE NOT NULL, 
 			cart_submited	tinyint(2) NOT NULL DEFAULT 0, 
 			
-			PRIMARY KEY (cart_no),
-			KEY ky_user_id (user_id),
-			CONSTRAINT fornky_carts_user_id 
-				FOREIGN KEY(user_id)  
-				REFERENCES users(user_id) 
-				ON DELETE SET NULL 
-				ON UPDATE CASCADE
+
+
+			PRIMARY KEY (cart_no)
+		
+			 
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;`	
+//CONSTRAINT fornky_carts_user_id,					KEY ky_user_id (user_id)
 
 		conction2.query(create_tbl4 , (err) =>{
 			if(err) {
-				console.log('db_confg: ERROR: "Table4" of 7, NOT recognized in the DB! at: '+new Date().toLocaleTimeString());
-				handled_tables.push('tbl4 NOT recognized in the DB!');
+				console.log('db_confg: ERROR: "Table4" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
+				console.log('444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444');
+				
+				console.log('tbl4 err:',err);
+				console.log('444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444');
+
+				handled_tables.push('tbl4 NOT created in the DB!');
 			}
 			else {console.log('db_confg: OK: "Table4" of 7, created at: '+new Date().toLocaleTimeString())
 				conction2.query(data4db.tbl4_data , (err) =>{
@@ -269,8 +273,13 @@ function create_tables_with_data(){
 
 		conction2.query(create_tbl5 , (err) =>{
 			if(err) {
-				console.log('db_confg: ERROR: "Table5" of 7, NOT recognized in the DB! at: '+new Date().toLocaleTimeString());
-				handled_tables.push('tbl5 NOT recognized in the DB!');
+				console.log('db_confg: ERROR: "Table5" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
+				console.log('55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555');
+
+				console.log('tbl5 err:',err);
+				console.log('55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555');
+
+				handled_tables.push('tbl5 NOT created in the DB!');
 			}
 			else {console.log('db_confg: OK: "Table5" of 7, created at: '+new Date().toLocaleTimeString())
 				conction2.query(data4db.tbl5_data , (err) =>{
@@ -289,13 +298,13 @@ function create_tables_with_data(){
 	///CREATE TABLE6: orders  
 	let create_tbl6 = `CREATE TABLE IF NOT EXISTS orders (
 		order_no		INT AUTO_INCREMENT,
-		user_id			BIGINT,
+		user_id			BIGINT NOT NULL,
 		cart_no			INT ,
 		order_total		DECIMAL(10,2)  NOT NULL,
-		order_submited	tinyint(2) NOT NULL DEFAULT 0
+		order_submited	tinyint(2) NOT NULL DEFAULT 0,
 		order_date		DATE, 
-		payment_id		VARCHAR(40),
-		ship_date 		DATE ,
+		payment_id		VARCHAR(100),
+		ship_date 		DATE, 
 		ship_street		VARCHAR(100),
 		ship_city		VARCHAR(100),
 		ship_st_number	VARCHAR(10),
@@ -319,8 +328,13 @@ function create_tables_with_data(){
 
 		conction2.query(create_tbl6 , (err) =>{
 			if(err) {
-				console.log('db_confg: ERROR: "Table6" of 7, NOT recognized in the DB! at: '+new Date().toLocaleTimeString());
-				handled_tables.push('tbl1 NOT recognized in the DB!');
+				console.log('db_confg: ERROR: "Table6" of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
+				console.log('666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666');
+				
+				console.log('tbl6 err:',err);
+				console.log('666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666');
+				
+				handled_tables.push('tbl6 NOT created in the DB!');
 			}
 			else {console.log('db_confg: OK: "Table6" of 7, created at: '+new Date().toLocaleTimeString())
 				conction2.query(data4db.tbl6_data , (err) =>{
@@ -352,8 +366,8 @@ function create_tables_with_data(){
 
 	conction2.query(create_tbl7 , (err) =>{
 		if(err) {
-			console.log('db_confg: ERROR: "Table7"(rehovot)of 7, NOT recognized in the DB! at: '+new Date().toLocaleTimeString());
-			handled_tables.push('tbl7 NOT recognized in the DB!');
+			console.log('db_confg: ERROR: "Table7"(rehovot)of 7, NOT created in the DB! at: '+new Date().toLocaleTimeString());
+			handled_tables.push('tbl7 NOT created in the DB!');
 		} else {
 			
 			console.log('db_confg: OK: "Table7" of 7, created at: '+new Date().toLocaleTimeString())
